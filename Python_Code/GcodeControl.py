@@ -37,7 +37,7 @@ class GcodeControler:
         self.__ArduinoComms = arduinoComms
         
         # USed to calculate amount of time for movement, set externally
-        self.__speed = 15
+        self.__speed = 20
         
         # Used to calculate amount of time for movement, these values are set when the simulation is made.
         self.__numServoMoves = 0
@@ -140,7 +140,7 @@ class GcodeControler:
         self.__penIsUp = True
         self.__ArduinoComms.sendSingleCommand('C10,END')
 
-        badExit = False
+        unexpectedExit = False
         for command in commands:
             # If program is paused, wait for resume or stop
             while(self.__gcodePaused):
@@ -150,7 +150,7 @@ class GcodeControler:
 
             if self.__stopGcode:
                 self.__stopGcode = False
-                badExit = True
+                unexpectedExit = True
                 self.__gcodePaused = False
                 break
             
@@ -160,15 +160,13 @@ class GcodeControler:
                 self.__ArduinoComms.sendSingleCommand('C13')
                 return False, "FAILED, Comms Problem"
 
-        if not badExit:
+        if not unexpectedExit:
             if not self.__ArduinoComms.waitForComplete():
                 # Move Home
                 self.__ArduinoComms.sendSingleCommand("C06")
         else:
-            #Save current position to eeprom
-            self.__ArduinoComms.sendSingleCommand('C17')
             if self.__debug:
-                print("Bad Exit.")
+                print("Unexpected Exit.")
 
         #Enable user input
         self.__ArduinoComms.sendSingleCommand('C13')

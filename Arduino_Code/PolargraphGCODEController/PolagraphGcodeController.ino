@@ -1,8 +1,11 @@
+/*
+Main of GCODE_Plotter_Polargraph Arduino Code.
+https://github.com/Joeshmoe16/GCODE_Plotter_Polargraph.git
+*/
+
 #include <AccelStepper.h>
 #include <AFMotor.h>
 #include <Servo.h>
-#include <EEPROM.h>
-#include "EEPROMAnything.h"
 #include <string.h>
 
 #define ESTOP_BTN 22 
@@ -10,9 +13,6 @@
 #define GCODE
 #define TEST_GCODE
 #define OLED 
-
-//speed is 0-100 (mm/sec) representing 0-1000 steps per second (with 200 steps/rotation, and 20 teeth per step, each tooth moves 1mm)
-#define DEFAULT_SPEED 15 
 
 typedef struct {
     uint16_t L=0;
@@ -41,8 +41,9 @@ extern AccelStepper motorR;
 double currentXpos = 0;
 double currentYpos = 0;
 
-float currentSpeed = DEFAULT_SPEED;
-float currentMotorspeed = 0;
+//speed is 0-100 (mm/sec) representing 0-1000 steps per second (with 200 steps/rotation, and 20 teeth per step, each tooth moves 1mm)
+float currentSpeed = 20;
+//0-100 representing 0-1000 steps per second squared, comms can change this value, currently the acceleration doesn't do anything
 float currentAcceleration = 50;
 
 // Comms * * * * * * * * * * 
@@ -96,7 +97,6 @@ const static char CMD_ENABLE_USER_INPUT[] = "C13";
 const static char CMD_DISABLE_USER_INPUT[] = "C14";
 const static char CMD_TEST_GCODE[] = "C15";
 const static char CMD_SET_HOME_POS[] = "C16";
-const static char CMD_SET_EEPROM_POS[] = "C17";
 const static char CMD_SET_ABSOLUTE_POS[] = "C90";
 const static char CMD_SET_RELATIVE_POS[] = "C91";
 
@@ -124,9 +124,8 @@ void setup() {
   comms_ready();
 
   // //IO
-  // servo_setup();
-
-  // stepperSetup();
+  servo_setup();
+  stepperSetup();
 
   Serial.println("SETUP COMPLETE!");
 
@@ -161,7 +160,6 @@ bool EstopPressed(){
     if (!eStopPressed){
       eStopPressed = true;
       stopMotors();
-      setEEPROMCurrentPosition();
       delay(250);
     }
     return true;

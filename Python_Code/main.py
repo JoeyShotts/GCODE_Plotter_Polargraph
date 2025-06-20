@@ -372,7 +372,10 @@ class GCODE_Controller_GUI(tk.CTk):
             return
 
         self.ArduinoComms.endComm()
+        self.userFeedbackLabel.configure(text="Starting machine...")
+        self.update()
         self.ArduinoComms.startComm(self.portList[index])
+        self.ArduinoComms.waitForComplete()
 
     # REGION Individual Buttons/controls
     def setHome(self):

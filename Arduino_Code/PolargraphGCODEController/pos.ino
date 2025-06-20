@@ -14,8 +14,8 @@ Controls the position of the plotter.
 #define STEPS_PER_LENGTH (double)10
 
 //home position distance from center of left stepper motor
-#define HOME_OFFSET_X (double)37.3
-#define HOME_OFFSET_Y (double)37.3
+#define HOME_OFFSET_X (double)47.3
+#define HOME_OFFSET_Y (double)47.3
 
 
 //mm, max machine location from home
@@ -23,7 +23,7 @@ Controls the position of the plotter.
 #define MAX_POS_Y (double)800 //negative distance from home ex. 800 checks if Y>-800
 
 //distance between stepper motor center axles
-#define STEPPERM_X_DIS (double)695
+#define STEPPERM_X_DIS (double)698
 
 motorPos calcMotorPos(double X, double Y){
   static motorPos pos;
@@ -85,8 +85,9 @@ void RapidPositioning(double X, double Y){
   }
   
   if(checkValidPosition(X, Y)){
-    setMotorTargetPosition(calcMotorPos(X, Y));
-    util_WaitForMotorsAccel();
+    movePositionDirect(X, Y);
+    // setMotorTargetPosition(calcMotorPos(X, Y));
+    // util_WaitForMotorsAccel();
     currentXpos = X;
     currentYpos = Y;
   }

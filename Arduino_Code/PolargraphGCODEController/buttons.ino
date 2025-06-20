@@ -1,5 +1,5 @@
 /*
-  Three buttons, only two are read here. States are also changed here. And OLED is updated here if one is included.
+  Three buttons, only two are read here (ESTOP is implimented in main). States are also changed here. And OLED is updated here if one is included.
   The top button TOP_BTN controls the function that will run.
   The bottom button BTM_BTN runs the currently selected function. The function is displayed on the OLED if one is included.
 */
@@ -8,7 +8,7 @@
 #define DEBOUNCE_LVL 30
 #define TOP_BTN 24 //Run Mode
 #define BTM_BTN 25 //Mode Select 
-#define NUM_MODES 9
+#define NUM_MODES 8
 
 bool runBtn = false;
 bool wasRun = false;
@@ -23,7 +23,7 @@ typedef void (*VoidFuncPtr)();
 
 VoidFuncPtr modeFuncs[] = {
   moveHome,
-  setEEPROMMotorZero,
+  setMotorHome,
   testGcode,
   paperAirplaneGcode,
   handsGcode,

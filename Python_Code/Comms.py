@@ -28,9 +28,9 @@ class USBComm:
 
         # Constants
         # Loop wait time, time after sending command that device has to process the command
-        self.__loopWaitTime = 0.001
+        self.__loopWaitTime = 0.0001
         # Flag to print debug info to terminal
-        self.__debug = True
+        self.__debug = False
         # Baud rate of connection
         self.__baudRate = 1000000
         # time in loop before giving up on waiting from reply from connected device
@@ -54,39 +54,6 @@ class USBComm:
             completed = self.waitForComplete()
         return completed
 
-    def readRemainingData(self):
-        """
-        Reads any data left over and expects either a READY or a "" data input.
-        """
-        # Print out remaining data.
-        if self.__debug:
-            print("Remaining Data: ")
-        startTime = time.time()
-        while True:
-            if (time.time()-startTime) > self.__loopTimeout:
-                break
-            data = self.__device.readline()
-
-            try:
-                data = data.decode()
-
-            except UnicodeDecodeError:
-                if self.__debug:
-                    print("Unicdode Decode Error")
-                if self.__debug:
-                    print(str(data))
-                continue
-
-            data = data.replace("\n", "")
-            if self.__debug:
-                print(data)
-
-            if data == "":
-                break
-            elif "READY" in data:
-                break
-            time.sleep(self.__loopWaitTime)
-
     def waitForComplete(self):
         """
         Waits for the device to send back either a READY signal or a CMD_COMPLETE signal.
@@ -94,14 +61,15 @@ class USBComm:
         """
         if self.__debug:
             print("---------------WAIT FOR COMPLETE---------------")
+        data = ""
         while True:
             # Check device is still connected
             if not self.testConnectionNoOutput():
                 return False
-            data = self.__device.readline()
+            newData = self.__device.readline()
 
             try:
-                data = data.decode()
+                data += newData.decode()
 
             except UnicodeDecodeError:
                 if self.__debug:
@@ -169,15 +137,16 @@ class USBComm:
         # Waits for the command to be sent back from the device, verifies the command matches
         checkCommand = command.replace("\n", "") # Remove newlines from command
         startTime = time.time()
+        data = ""
         while True:
             # Check that the wait for received command has not errored out
             if (time.time()-startTime) > self.__loopTimeout:
                 break
             
             # Read the current data from the device
-            data = self.__device.readline()
+            newData = self.__device.readline()
             try:
-                data = data.decode()
+                data += newData.decode()
             except UnicodeDecodeError:
                 if self.__debug:
                     print("Unicdode Decode Error")

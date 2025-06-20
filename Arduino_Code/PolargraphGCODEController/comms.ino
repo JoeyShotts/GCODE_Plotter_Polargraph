@@ -2,7 +2,7 @@
 *  Polargraph Server. - CORE
 *  Originally Written by Sandy Noble
 *  Heavily modified by Joseph Shotts
-*  Modified Project at
+*  Modified Project at: https://github.com/Joeshmoe16/GCODE_Plotter_Polargraph.git
 *  Original files at:
 *  Released under GNU License version 3.
 *  http://www.polargraph.co.uk

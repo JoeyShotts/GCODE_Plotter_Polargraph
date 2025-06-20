@@ -13,33 +13,16 @@ void util_runBackgroundProcesses(){
   // if there has been a long time since last command release the motors so they're not on.
   if((millis()-timeSinceLastCommand) > timeBeforeDisengage){
     Serial.println("Disengaged Motors Time Delay.");
-    disengageMotors();
+    stopMotors();
     timeSinceLastCommand = millis();
   }
 }
 
-//Wait for the motors to finish movement when moving with acceleration
-void util_WaitForMotorsAccel(){
-  if(EstopPressed()){
-    return;
-  }
-  //Serial.println("Util wait for motors Accel.");
-  while(!atTargetPos()){
+void util_WaitForMotors(){
+  while(NotAtTargetPos()){
     if(EstopPressed()){
       return;
     }
-
-    motorL.run();
-    motorR.run();
-  }
-}
-
-void util_WaitForMotors(){
-  if(EstopPressed()){
-    return;
-  }
-
-  while(!atTargetPos()){
     motorL.runSpeedToPosition();
     motorR.runSpeedToPosition();
   }
@@ -61,8 +44,6 @@ void util_processCommand(String com){
     CMD_MoveDirect();
   else if (com.startsWith(CMD_MOVE_RELATIVE))
     CMD_MoveRelative();
-  else if (com.startsWith(CMD_SET_EEPROM_POS))
-    setEEPROMCurrentPosition();
   else if (com.startsWith(CMD_HOME))
     moveHome();
   else if (com.startsWith(CMD_SET_SPEED))
@@ -82,7 +63,7 @@ void util_processCommand(String com){
   else if (com.startsWith(CMD_TEST_GCODE))
     testGcode();
   else if (com.startsWith(CMD_SET_HOME_POS))
-    setEEPROMMotorZero();
+    setMotorHome();
   else if (com.startsWith(CMD_SET_ABSOLUTE_POS))
     relativeCoords = false;
   else if (com.startsWith(CMD_SET_RELATIVE_POS))

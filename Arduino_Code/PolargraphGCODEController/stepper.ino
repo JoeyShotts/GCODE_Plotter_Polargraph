@@ -22,153 +22,83 @@ const int maxEverSpeed = 1000; //steps/sec
 const int maxAcceleration = 5000.0; //steps/sec
 
 static motorPos motorHomePos;
-static motorPos motorMaxPos;
 
-
+// seperate from currentSpeed and currentAcceleration, these are the speed/accel in steps/second
+float currentMotorspeed = 0;
+float currentMotorAcceleration = 0;
 
 void stepperSetup(){
   setMotorSpeed(currentSpeed);
   setMotorAcceleration(currentAcceleration);
-  calculateHomeMaxLengths();
-  setMotorCurrentPositionEEPROM();
+  motorHomePos = calcMotorPos(0, 0);
+  motorL.setCurrentPosition(motorHomePos.L);
+  motorR.setCurrentPosition(motorHomePos.R);
   moveHome();
 }
 
-void calculateHomeMaxLengths(){
-  /* Calculate the positiosn the stepper motors need to be at for min and max positions.*/
-  motorHomePos = calcMotorPos(0, 0);
-  motorPos pos;
-  pos = calcMotorPos(700, 1000);
-  motorMaxPos.R = pos.R;
-  pos = calcMotorPos(0, 1000);
-  motorMaxPos.L = pos.L;
-
-  Serial.print("Max ");
-  printPos(motorMaxPos);
-
-  Serial.print("Home ");
-  printPos(motorHomePos);
-}
 
 void setMotorTargetPosition(motorPos pos){
+  motorL.setAcceleration(currentMotorAcceleration);
+  motorR.setAcceleration(currentMotorAcceleration);
   motorL.moveTo(pos.L);
   motorR.moveTo(pos.R);
 }
 
 void setMotorTargetPositionMoveDirect(motorPos pos){
-  motorL.setTargetAndSpeed(pos.L, currentMotorspeed);
-  motorR.setTargetAndSpeed(pos.R, currentMotorspeed);
+  // this is necessary to run the motor in a contant direction
+  if(pos.L >= motorL.currentPosition()){
+    motorL.moveTo(pos.L);
+    motorL.setSpeed(currentMotorspeed);
+  }
+  else{
+    motorL.moveTo(pos.L);
+    motorL.setSpeed(-currentMotorspeed);
+  }
 
-  // motorL.moveTo(pos.L);
-  // motorL.setSpeed(currentMotorspeed);
-  // motorR.moveTo(pos.R);
-  // motorR.setSpeed(currentMotorspeed);
+  if(pos.R >= motorR.currentPosition()){
+    motorR.moveTo(pos.R);
+    motorR.setSpeed(currentMotorspeed);
+  }
+  else{
+    motorR.moveTo(pos.R);
+    motorR.setSpeed(-currentMotorspeed);
+  }
 }
 
-void setEEPROMMotorZero(){
-  Serial.println("Set EEPROM Pos Zero");
-  EEPROM_writeAnything(EEPROM_MOTOR_L_POS, motorHomePos.L);
-  EEPROM_writeAnything(EEPROM_MOTOR_R_POS, motorHomePos.R);
-
+void setMotorHome(){
   motorL.setCurrentPosition(motorHomePos.L);
   motorR.setCurrentPosition(motorHomePos.R);
-
   currentXpos = 0;
   currentYpos = 0;
 }
 
-void setMotorCurrentPositionEEPROM(){
-  motorPos pos;
-  EEPROM_readAnything(EEPROM_MOTOR_L_POS, pos.L);
-  EEPROM_readAnything(EEPROM_MOTOR_R_POS, pos.R);
-  Serial.print("Actual L: ");
-  Serial.print(pos.L);
-  Serial.print(", R: ");
-  Serial.println(pos.R);
-
-  if (!checkMotorPosition(pos)){
-    setEEPROMMotorZero();
-    pos.L=0;
-    pos.R=0;
-  }
-
-  motorL.setCurrentPosition(pos.L);
-  motorR.setCurrentPosition(pos.R);
-}
-
-void setEEPROMCurrentPosition(){
-  EEPROM_writeAnything(EEPROM_MOTOR_L_POS, motorL.currentPosition());
-  EEPROM_writeAnything(EEPROM_MOTOR_R_POS, motorR.currentPosition());
-}
-
-void printPos(motorPos pos){
-  Serial.print("L: ");
-  Serial.print(pos.L);
-  Serial.print(", R: ");
-  Serial.println(pos.R);
-}
-
-bool checkMotorPosition(motorPos pos){
-  if((pos.L < 0) || (pos.L > motorMaxPos.L)){
-    // Serial.print("Pos ");
-    // printPos(pos);
-    // Serial.println("Inavalid Position");
-    return false;
-  }
-  else if((pos.R < 0) || (pos.R > motorMaxPos.R)){
-    // Serial.print("Pos ");
-    // printPos(pos);
-    // Serial.println("Inavalid Position");
-    return false;
-  }
-  else{
-    return true;
-  }
-}
-
-
-// void engageMotors()
-// {
-//   motorsEngaged = true;
-//   motorL.move(1);
-//   motorR.move(1);
-//   motorL.move(-1);
-//   motorR.move(-1);
-// }
-
-void disengageMotors()
-{
-  afMotorL.release();
-  afMotorR.release();
-}
 
 void stopMotors(){
   motorL.stop();
   motorR.stop();
-  disengageMotors();
+  afMotorL.release();
+  afMotorR.release();
 }
 
 void moveStepperHome(){
-  setMotorSpeed(DEFAULT_SPEED);
+  // setMotorSpeed(DEFAULT_SPEED);
 
-  motorL.moveTo(motorHomePos.L);
-  motorR.moveTo(motorHomePos.R);
+  // motorL.moveTo(motorHomePos.L);
+  // motorR.moveTo(motorHomePos.R);
   
-  util_WaitForMotorsAccel();
+  // util_WaitForMotorsAccel();
+
+  setMotorTargetPositionMoveDirect(motorHomePos);
+  util_WaitForMotors();
   currentXpos = 0;
   currentYpos = 0;
 
-  setEEPROMMotorZero();
+  setMotorHome();
 }
 
 
-bool atTargetPos(){
-  if ((motorL.distanceToGo() == 0) && (motorR.distanceToGo() == 0)){
-    return true;
-  }
-  else{
-    return false;
-  }
+bool NotAtTargetPos(){
+  return (motorL.distanceToGo() || motorR.distanceToGo());
 }
 
 void setMotorAcceleration(float inAccel)
@@ -176,6 +106,7 @@ void setMotorAcceleration(float inAccel)
   currentAcceleration = inAccel;
 
   int accel = (int)((currentAcceleration/100)*maxAcceleration);
+  currentMotorAcceleration = accel;
 
   motorL.setAcceleration(accel);  
   motorR.setAcceleration(accel);
