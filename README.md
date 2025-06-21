@@ -9,17 +9,4 @@ This documentation is split into folders as there are lot of different parts to 
 # Video Demo
 
 
-# Electronics
-This project uses electronics that are less than desirable. It uses nema17 motors (good), a 9g servo (good) and a knockoff of the AdafruitMotorSheildV1 (I regret this choice). Nema17 motors tend to draw more current than the AdafruitMotorSheildV1 likes to provide. I wired 4 1/4 watt resitors in series with each coil of the nema17 motors (16 resistors total). This is not ideal and I would use a different motor driver in the future. It would be relativley trivial to update the driver in the arduino code as the accel steppers library is used.
-
-It has 3 physical pushbuttons (no hardware debounce or resitors needed). One is an EStop that will stop the machine at any point. Another is used to change a function, see manual functions below to get a list of the functions on the machine. The third will run the currently selected function. These give a user the ability to just run a GCODE file, without and kind of software/usb connection needed.
-
-It also uses a single I2C 0.96 inch common OLED screen (128x64 pixels) to allow for some functions to be run directly on the machine. This is convenient but can be easily disabled with a single MACRO in the arduino code.
-
-Here are some electonics diagrams of the project:
-
-## Stepper Diagram 
-Different Nema17 steppers can be wired differently and have different current draws so be careful. 
-![Nema17 Bipolar Steper Diagram](ElectronicsDiagrams\Nema17BipolarDiagram.png)
-
 

@@ -19,8 +19,8 @@ This holds the Marker/pen and a servo. The servo rotates down to push the marker
 # Weights
 There are desgins for specific weights for the machine. They use a lot of filament (around 1200 grams when printed with 100% infill) so they don't actually need to be printed. It should be noted that the center weight is tricky. It must have a center of gravity that is less than 1-2cm away from the whiteboard. The designed weight accomplishes this and a replacement weight must do something similar. This center weight helps to create pressure on the pen/marker. If the center of gravity is too far away from the white board, the pen/marker will not make good contact.
 
-# Electronics Board
-There is a design for an electronics board. It holds an arduino mega, has attachment points for the same clip as the motor brackets, and it has some other places to zip tie wires or attach other electronic boards.
-
 # Pen Holder Adapter
 There is also a pen holder Adapter. This fits into the gondola. The gondola is designed to hold a standard expo marker by default. This peice allows for a pen to be attached, and even held in place by an M2 screw if desired.
+
+# Electronics Board
+There is a design for an electronics board. It holds an arduino mega, has attachment points for the same clip as the motor brackets, and it has some other places to zip tie wires or attach other electronic boards.
