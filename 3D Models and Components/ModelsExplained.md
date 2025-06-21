@@ -2,8 +2,17 @@
 All of the designed were created with onshape. Onshape is free for hobby use, professional grade, web-based 3D design softwate. It's more freindly for beginers and you can copy and edit my designs there. You can access the onshape file here:
 [OnShape Link](https://cad.onshape.com/documents/ab6b596e4392295efecd3ac1/w/dc93ebaf0ace8be6780ac9ec/e/0725e028e4da9825d101adc6?renderMode=0&uiState=6855ba55a5c94332b50f6fd7)
 
+# Purchased Components
+You will need a belt and pulley:
+[Belt and Pulley for Nema 17](https://www.amazon.com/Zeelo-Timing-Pulley-Meters-Printer/dp/B07XG9JN5B/ref=sr_1_2?crid=1G5UYWVFAUSBB&dib=eyJ2IjoiMSJ9.GI7IYPVX0L1IwCQjkCR05WvW3jAM4ZuUnRIlTQJCUizdI8Hmj20v0d7PmKaoVUzZyd5GmnhcQmJhCCJxGPF7ymNzlOd2fr8ciFztPYL7c-42PSgREzCqUdjSa4J7YgP80PcPfrI6Xq64ojhuuOkMFWC7Rm3o6vX_wy6ZuXANI80aHiWc-zlIveDbJLLt-6L3iSX77LYO87Ua26osXSZ-crbNUO6IKXmOMnXs_6HHhlA.cvO0-lfiMIIA8aI7ucSUXOshvGekwcqI4hk7xA5IM9A&dib_tag=se&keywords=nema%2B17%2BGT2&qid=1727893603&sprefix=nema%2B17%2Bgt%2Caps%2C122&sr=8-2&th=1)
+
+You may also want some screws. (You could probably get away wihtout them, especially if the motor comes with some)
+[Screw Link](https://www.amazon.com/dp/B0BJVHZVGV?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
+
+I also use a few different sizes of zip ties, but those can easily be picked up at a local store.
+
 # Motor Brackets
-These are designed to hold nema17 stepper motors. They are designed for Motors with a relativley short shaft(less than ~2cm) and a gear pulley with an outer diameter less than 1.75cm. They have a curved shape which helps to act as idlers and keep the belt from slipping. The left bracket has a cross that allows you to line up the gondola so the machine has a home position. See Usage intrctions for more info on how to home the machine.
+These are designed to hold nema17 stepper motors. They are designed for Motors with a relativley short shaft(less than 2.5cm) and a gear pulley with an outer diameter less than 1.75cm. They have a curved shape which helps to act as idlers and keep the belt from slipping. The left bracket has a cross that allows you to line up the gondola so the machine has a home position. See Usage intrctions for more info on how to home the machine.
 
 ![Motor Bracket](MotorBracketL.png)
 
