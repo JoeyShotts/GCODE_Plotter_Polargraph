@@ -3,6 +3,7 @@ from PlotPoints import plotPoints
 import re #Used to process gcode commands quickly
 import time
 import os
+import sys
 
 class GcodeControler:
     """
@@ -189,9 +190,13 @@ class GcodeControler:
         """
         Tries to run executable that generates points. Returns string indicating result.
         """
-
+        path = "GeneratePoints.exe"
+        if hasattr(sys, '_MEIPASS'):
+            # Running as a PyInstaller bundle
+            path = os.path.join(sys._MEIPASS, path)
+        
         try:
-            subprocess.run("GeneratePoints.exe", check=True) # check=True raises CalledProcessError if it fails
+            subprocess.run(path, check=True) # check=True raises CalledProcessError if it fails
         except subprocess.CalledProcessError:
             return False, "Failed to Generate Points." 
 

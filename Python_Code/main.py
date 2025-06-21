@@ -4,6 +4,7 @@ from GcodeControl import GcodeControler
 import customtkinter as tk
 
 import sys
+import os
 import keyboard
 import threading
 from queue import Queue
@@ -55,6 +56,11 @@ class GCODE_Controller_GUI(tk.CTk):
         self.geometry("750x450")
         self.minsize(width=550, height=350)
         self.title("Arduino GCODE Controller")
+        path = "Plotter_Icon.ico"
+        if hasattr(sys, '_MEIPASS'):
+            # Running as a PyInstaller bundle
+            path = os.path.join(sys._MEIPASS, path)
+        self.iconbitmap(path)
         tk.set_default_color_theme("dark-blue")
         tk.set_widget_scaling(1.2)
         tk.set_appearance_mode("dark")
