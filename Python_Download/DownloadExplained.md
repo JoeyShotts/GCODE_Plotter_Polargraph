@@ -1,0 +1,3 @@
+This executable is the application that can be used to simulate and run GCODE commands on the device. You can download and run it.
+
+If you're a Mac or Linux user, sorry this won't work for you. The python application could likely work on a linux/Mac machine, none of the libraries are windows only, but the Cpp file for simulation would need to be rebuilt, and the usb selection would likely need some changes.

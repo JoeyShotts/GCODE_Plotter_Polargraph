@@ -114,6 +114,7 @@ class GcodeControler:
 
     def runGcode(self):
         self.__stopGcode = False
+        self.__gcodePaused = False
 
         if not self.__ArduinoComms.testConnection():
             return
@@ -155,6 +156,11 @@ class GcodeControler:
                 self.__gcodePaused = False
                 break
             
+            #Don't send pause command to machine, just pause current program execution
+            if("G04" in command):
+                self.__gcodePaused = True
+                continue
+
             command = self.__processCommand(command)
             if not self.__ArduinoComms.sendSingleCommand(command):
                 #Enable user input
