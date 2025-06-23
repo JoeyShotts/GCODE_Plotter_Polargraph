@@ -8,7 +8,7 @@
 #define DEBOUNCE_LVL 30
 #define TOP_BTN 24 //Run Mode
 #define BTM_BTN 25 //Mode Select 
-#define NUM_MODES 8
+#define NUM_MODES 9
 
 bool runBtn = false;
 bool wasRun = false;
@@ -17,28 +17,31 @@ bool modeUpdated = false;
 
 char mode = 0;
 
-const String modeNames[NUM_MODES] = {"HOME", "SET\nHOME", "TEST\nGCODE", "Paper\nAirplane", "Hands", "Heart", "PEN\nUP", "PEN\nDOWN"};
+const String modeNames[NUM_MODES] = {"HOME", "SET\nHOME", "TEST\nGCODE", "Paper\nAirplane", "Hands", "Heart", "Flow\nField" "PEN\nUP", "PEN\nDOWN"};
 
 typedef void (*VoidFuncPtr)();
 
 VoidFuncPtr modeFuncs[] = {
   moveHome,
-  setMotorHome,
+  setStepperHome,
   testGcode,
   paperAirplaneGcode,
   handsGcode,
   heartGcode,
+  flowField,
   penlift_penUp,
   penlift_penDown,
 };
 
-void SetupIO(){
+void SetupButtonIO(){
+  #ifdef MODE_BUTTONS
   pinMode (TOP_BTN, INPUT_PULLUP);
   pinMode (BTM_BTN, INPUT_PULLUP);
-  pinMode (ESTOP_BTN,INPUT_PULLUP);
+  #endif
 }
 
 void RunIO_Modes(){
+  #ifdef MODE_BUTTONS
   runBtn = RunBtn();
   modeBtn = ModeBtn();
   
@@ -62,6 +65,7 @@ void RunIO_Modes(){
       modeUpdated = false;
     }
   }
+  #endif
 }
 
 

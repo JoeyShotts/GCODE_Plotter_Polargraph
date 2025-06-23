@@ -23,9 +23,10 @@ Controls the position of the plotter.
 #define MAX_POS_Y (double)800 //negative distance from home ex. 800 checks if Y>-800
 
 //distance between stepper motor center axles
-#define STEPPERM_X_DIS (double)698
+#define STEPPERM_X_DIS (double)665
 
 motorPos calcMotorPos(double X, double Y){
+  // This determines the positions of the stepper motors based on a given X,Y position
   static motorPos pos;
   static double X_RBL = 0;
   //invert Y axis to simplify calculation
@@ -69,7 +70,7 @@ void movePositionDirect(double X, double Y){
     //no movement, position is the same
     return;
   }
-  setMotorTargetPositionMoveDirect(newPos);
+  setMotorTargetPosition(newPos);
   util_WaitForMotors();
   prevPos = newPos;
 }
@@ -86,8 +87,6 @@ void RapidPositioning(double X, double Y){
   
   if(checkValidPosition(X, Y)){
     movePositionDirect(X, Y);
-    // setMotorTargetPosition(calcMotorPos(X, Y));
-    // util_WaitForMotorsAccel();
     currentXpos = X;
     currentYpos = Y;
   }

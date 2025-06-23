@@ -40,16 +40,14 @@ void util_processCommand(String com){
     CMD_CircularInterpolationCW();
   else if (com.startsWith(CMD_G03))
     CMD_CircularInterpolationCC();
-  else if (com.startsWith(CMD_MOVE_DIRECT))
-    CMD_MoveDirect();
+  else if (com.startsWith(CMD_PAUSE))
+    ;
   else if (com.startsWith(CMD_MOVE_RELATIVE))
     CMD_MoveRelative();
   else if (com.startsWith(CMD_HOME))
     moveHome();
   else if (com.startsWith(CMD_SET_SPEED))
     setMotorSpeed(atof(inParam1));
-  else if (com.startsWith(CMD_SET_ACCEL))
-    setMotorAcceleration(atof(inParam1));
   else if (com.startsWith(CMD_PENUP))
     penlift_penUp();
   else if (com.startsWith(CMD_PENDOWN))
@@ -63,7 +61,7 @@ void util_processCommand(String com){
   else if (com.startsWith(CMD_TEST_GCODE))
     testGcode();
   else if (com.startsWith(CMD_SET_HOME_POS))
-    setMotorHome();
+    setStepperHome();
   else if (com.startsWith(CMD_SET_ABSOLUTE_POS))
     relativeCoords = false;
   else if (com.startsWith(CMD_SET_RELATIVE_POS))
@@ -82,6 +80,8 @@ void moveHome(){
 
   moveStepperHome();
 }
+
+// the atof(inParamx); gets the value that was set when the comm was sent
 
 // Moves to a position with acceleration at max speed
 void CMD_RapidPositioning(){
@@ -115,21 +115,8 @@ void CMD_CircularInterpolationCC(){
   CircularInterpolationCCW(X, Y, I, J);
 }
 
-void CMD_MoveDirect(){
-  //moves directly to a position
-  //WARNING: if estop is pressed, currentPos variables will be wrong
-  double X_POS = atof(inParam1);
-  double Y_POS = atof(inParam2);
-  if(!checkValidPosition(X_POS, Y_POS)){
-    return;
-  }
-  movePositionDirect(X_POS, Y_POS);
-  currentXpos = X_POS;
-  currentYpos = Y_POS;
-}
-
 void CMD_MoveRelative(){
-  //moves directly to a position
+  //moves to relative position and ignores relative/absolute coordinates
   //WARNING: if estop is pressed, currentPos variables will be wrong
   double X_DIS = atof(inParam1);
   double Y_DIS = atof(inParam2);

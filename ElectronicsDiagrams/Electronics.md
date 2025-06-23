@@ -1,6 +1,7 @@
 # Electronics
 I used Nema17 stepper motors, a 9g servo, 3 Buttons, and an OLED screen. You can disable the OLED screen easily if you don't want that feature. One of the buttons is for an estop, the other two allow you to directly run some functions on the arduino, stuff like home, a specific gcode function stored on the arduino, pen up/down. etc. I recommend an Arduino Mega for this project, but an Arduino Uno would likely work, and so would another reasonably powerful microcontroller if you know what you're doing.
 
+![OLED_Buttons](OLED_Buttons.png)
 
 ## Motor Driver
 This project uses a low cost motor driver. It uses nema17 motors and a knockoff of the AdafruitMotorSheildV1 (This can add some complexity). Some Nema17 motors tend to draw more current than the AdafruitMotorSheildV1 likes to provide. I wired 4 100 Ohm 1/4 watt resistors (in parallel to make 25 Ohms) in series with each coil of the nema17 motors (8 resistors per motor because there are 2 coils per motor). This is not ideal and can be avoided by using a lower current stepper motor (like the one linked below). It would also be relatively trivial to use a different motor driver update the arduino code as the accel steppers library is used. You simply need to update the functions that step each motor forward and backward.
@@ -24,7 +25,6 @@ I used a standard 180 degree 9g servo controlled with a PWM signal. Many motor s
 
 ## Push Buttons
 It has 3 physical pushbuttons (no hardware debounce or resistors needed). One is an EStop that will stop the machine at any point. Another is used to change a function, see manual functions below to get a list of the functions on the machine. The third will run the currently selected function. These give a user the ability to just run a GCODE file, without any kind of software/usb connection needed. The two change function and run function can be disabled by commenting out the macro MODE_BUTTONS.
-
 
 Note where the two sides of the buttons are. One side needs to be connected to ground, the other side to a digital input of the arduino. You can change the pins in the arduino in the code easily.
 

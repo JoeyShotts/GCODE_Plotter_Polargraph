@@ -5,7 +5,6 @@ Displays what function will run. Does not have to be included if project is to b
 #ifdef OLED
 #include <SPI.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
 //defaults to mega pins 21 and 22

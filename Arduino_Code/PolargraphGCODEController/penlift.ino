@@ -10,8 +10,9 @@
 
 #define  PEN_LIFT_SPEED 4 // ms between steps of moving servo
 
+#define SERVO_PIN 10
+
 Servo penHeight;
-const byte PEN_HEIGHT_SERVO_PIN = 10; 
 
 void servo_setup()
 {
@@ -23,7 +24,7 @@ void servo_setup()
 
 void penlift_movePen(int start, int end, int delay_ms)
 {
-  penHeight.attach(PEN_HEIGHT_SERVO_PIN);
+  penHeight.attach(SERVO_PIN);
   if(start < end)
   {
     for (int i=start; i<=end; i++) 

@@ -139,12 +139,12 @@ void parseInput(){
             } else if (commandCode == "C10"){
                 if (segments.size() == 1) {
                   relativeCoords=false;
-                  std::cout << "Pen Down\n";
+                  // std::cout << "Pen Down\n";
                 }
             }else if (commandCode == "C11"){
                 if (segments.size() == 1) {
                   relativeCoords=false;
-                  std::cout << "Pen Up\n";
+                  // std::cout << "Pen Up\n";
                 }
             }
             else if (commandCode == "C90"){
