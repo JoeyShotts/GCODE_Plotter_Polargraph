@@ -17,7 +17,7 @@ You will also need a power supply for the driver. This one is nice, I would set 
 
 
 ## Servo
-I used a standard 180 degree 9g servo controlled with a PWM signal. Many motor shields have spots for these, if they don't, you can easily wire the servo directly to the arduino.The AdafruitMotorSheildV1 has a spot for a servo and I plugged in a servo to motor 1. This connects to pin 10. The servo pin and be changed in the penLift.ino file.
+I used a standard 180 degree 9g servo controlled with a PWM signal. Many motor shields have spots for these, if they don't, you can easily wire the servo directly to the arduino.The AdafruitMotorSheildV1 has a spot for a servo and I plugged in a servo to motor 1. This connects to pin 10. The servo pin and be changed in the penLift.ino file. You will need some kind of servo extenstion or 3 wires to connect the servo to the arduino.
 
 
 [9g Servo Example](https://www.amazon.com/10Pcs-Servos-Helicopter-Airplane-Controls/dp/B07MLR1498/ref=sr_1_3_sspa?crid=31QJ0GLC8TVW4&dib=eyJ2IjoiMSJ9.c3kL7Mek5QkgzM_eJhqvJdx-kWzSfWnOb3n9LuZv9z8_91MWPQ3lt2b5rPZxpxc-4d4S32NnBROa6eFHrz72s0QN6QOhR9ArJ9_msYR0kWXuP933Hi1peWBnBNdvg8JRHcnRJ5vtrAgyHv-MKeZUdxIiuZazKG5x5xNFozYKQPKO5yXrOr2fH0MRS6yxQaFoBpA76ZfPah24fFWPXAEuJPe4pHQC3QyIX-XiXkxmMwlus6_IXUdNHEJGeD66cTl-6t0Wd_fdaJUC6uEOYaD43DkAs2chwLgGHoaiO4OaNSA.IJ5wnKRpjPYPLDdNT_aJriEQHpbSjnLFOpNlelawHws&dib_tag=se&keywords=9g%2Bservo&qid=1750509383&sprefix=9g%2Bservo%2Caps%2C124&sr=8-3-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1)
