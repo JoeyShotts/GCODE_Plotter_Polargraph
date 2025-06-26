@@ -9,6 +9,7 @@ https://github.com/Joeshmoe16/GCODE_Plotter_Polargraph.git
 #include <string.h>
 
 #define ESTOP_BTN 22 
+#define DEFAULT_SPEED 25
 
 //only uncoment and enable this line if you want all hell to be shown on the serial monitor
 // #define DEBUG_COMMS

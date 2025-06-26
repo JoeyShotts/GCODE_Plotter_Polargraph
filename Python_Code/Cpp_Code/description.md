@@ -1,1 +1,0 @@
-This is the CPP code that is built into the GeneratePoints.exe file. It is very similar to the interpolation code that runs on the arduino. It is used to create the simulation in the GUI.

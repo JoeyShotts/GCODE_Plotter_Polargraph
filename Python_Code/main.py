@@ -125,7 +125,8 @@ class GCODE_Controller_GUI(tk.CTk):
                 self.gcodeThreadRan = False
 
         curCmd = None
-        first = True
+        first = True #Used to grab the most recent item from the queue, 
+        # don't want the last item in the queue
         # Update the user feedback with the current command
         while not self.userFeedbackQueue.empty():
             if first:
