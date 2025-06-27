@@ -28,24 +28,27 @@ The application allows you to jog the plotter around. There are buttons to do th
 The application also allows you to set the speed. The slider only goes from 1-50, but the C07 command allows you to go past that to the 50-100 range.
 
 # Accepted Commands
-C00,X,Y - Rapid Positioning
-C01,X,Y - Linear Interpolation
-C02,X,Y,I,J - Circular Interpolation Clockwise
-C03,X,Y,I,J - Circular Interpolation Counter Clockwise
-C04 - Pause GCODE File (does nothing if sent to arduino. Intended so that G04 can be added to GCODE file)
-C05,X,Y - Move Relative: Moves directly to a position relative to current position (X, Y away)
-C06 - Home - Moves the device to the home position
-C07,SPEED - Sets the speed from 1-100% (is 1-100 mm/sec if the device has same stepper motors as this design)
-C08,C09 - Unused
-C10 - Pen Down
-C11 - Pen Up
-C12 - Stop Motors: turns off power to the motors
-C13 - Enable User Input: Enables the mode select and run buttons
-C14 - Disable User Input: Disables mode select and run buttons. Does not disable Estop button
-C15 - Test Gcode: Runs the test gcode program
-C16 - Set Home Position: Sets the position to be 0,0 and resets stepper motors to be at their home position.
-C90 - Set Absolute Position: Sets the C00-C03 commands to use absolute positioning
-C91 - Set Relative Position: Sets the C00-C03 commands to use relative positioning
+| Cxx | Description |
+| :------------- | :---------- |
+| C00,X,Y | Rapid Positioning |
+| C01,X,Y | Linear Interpolation |
+| C02,X,Y,I,J | Circular Interpolation Clockwise |
+| C03,X,Y,I,J | Circular Interpolation Counter Clockwise |
+| C04 | Pause GCODE File (does nothing if sent to arduino. Intended so that G04 can be added to GCODE file) |
+| C05,X,Y | Move Relative: Moves directly to a position relative to current position (X, Y away) |
+| C06 | Home - Moves the device to the home position |
+| C07,SPEED | Sets the speed from 1-100% (is 1-100 mm/sec if the device has same stepper motors as this design) |
+| C08\C09 | Unused |
+| C10 | Pen Down |
+| C11 | Pen Up |
+| C12 | Stop Motors: turns off power to the motors |
+| C13 | Enable User Input: Enables the mode select and run buttons |
+| C14 | Disable User Input: Disables mode select and run buttons. Does not disable Estop button |
+| C15 | Test Gcode: Runs the test gcode program |
+| C16 | Set Home Position: Sets the position to be 0,0 and resets stepper motors to be at their home position. |
+| C90 | Set Absolute Position: Sets the C00-C03 commands to use absolute positioning |
+| C91 | Set Relative Position: Sets the C00-C03 commands to use relative positioning |
+
 
 # User Input
 In this project there are 3 buttons and a feedback OLED screen. These can be disabled if they don't want to be used. See the Electronics.md file. The mode select changes the function that is shown on the OLED and that the run button will run. The run button runs the currently selected function. The functions include things like Home, Set Home, Pen Up/Down, and custom GCODE files loaded onto the arduino.
