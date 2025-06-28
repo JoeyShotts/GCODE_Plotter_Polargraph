@@ -64,6 +64,7 @@ In this project there are 3 buttons and a feedback OLED screen. These can be dis
 
 # Home Position
 The 3D models include an arm with a peg and a motor bracket. The plotter should be moved so the peg lines up with the cross on the bracket as in the image below. This is the home position of the machine.
+
 ![Home Position](HomePosition.png)
 
 
