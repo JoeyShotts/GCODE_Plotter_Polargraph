@@ -10,9 +10,9 @@ pip install keyboard (version 0.13.5)
 pip install pyserial (version 3.5)
 
 ## The Build
-This project was built into an executable using pyinstaller. Here is the full command:
+This project was built into an executable using pyinstaller. It was built for windows 64 bit. Here is the full command:
 pip install pyinstaller
-pyinstaller --onefile --noconsole --add-binary ".\\GeneratePoints.exe;." --icon ".\\Plotter_Icon.ico" --add-data ".\\Plotter_Icon.ico;." --name GCODE_Plotter  main.py
+pyinstaller --onefile --noconsole --add-binary ".\\GeneratePoints.exe;." --add-binary "c:\\mingw\\bin\\LIBSTDC++-6.DLL;." --add-binary "c:\\mingw\\bin\\LIBGCC_S_DW2-1.DLL;." --icon ".\\Plotter_Icon.ico" --add-data ".\\Plotter_Icon.ico;." --name GCODE_Plotter  main.py
 
 
 ## Code Overview
