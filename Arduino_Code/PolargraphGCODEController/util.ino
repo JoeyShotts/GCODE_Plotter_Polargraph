@@ -83,15 +83,16 @@ void moveHome(){
 
 void startMotors(){
   motorPos oneStep;
-  oneStep.L = motorL.getCurrentPosition()+1;
-  oneStep.R = motorR.getCurrentPosition()+1;
+  oneStep.L = motorL.currentPosition()+1;
+  oneStep.R = motorR.currentPosition()+1;
   setMotorTargetPosition(oneStep);
   util_WaitForMotors();
-  oneStep.L = motorL.getCurrentPosition()-1;
-  oneStep.R = motorR.getCurrentPosition()-1;
+  oneStep.L = motorL.currentPosition()-1;
+  oneStep.R = motorR.currentPosition()-1;
   setMotorTargetPosition(oneStep);
   util_WaitForMotors();
 }
+
 
 // the atof(inParamx); gets the value that was set when the comm was sent
 
