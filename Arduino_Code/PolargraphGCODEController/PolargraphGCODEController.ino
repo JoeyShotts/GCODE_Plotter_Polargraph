@@ -4,7 +4,7 @@ https://github.com/Joeshmoe16/GCODE_Plotter_Polargraph.git
 */
 
 #include <AccelStepper.h>
-#include <AFMotor.h>
+#include "AFMotor.h"
 #include <Servo.h>
 #include <string.h>
 
@@ -37,7 +37,7 @@ extern bool relativeCoords = false;
 
 // For disabling motors after set time * * * * * * * * * * 
 unsigned long timeSinceLastCommand = 0;
-unsigned long timeBeforeDisengage = 30000; //time it waits from most recent command to release the motor
+unsigned long timeBeforeDisengage = 40000; //time it waits from most recent command to release the motor
 
 // Movement Global Variables * * * * * * * * * *
 extern AccelStepper motorL;

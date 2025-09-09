@@ -81,7 +81,7 @@ void moveHome(){
   moveStepperHome();
 }
 
-void startMotors(){
+void engageMotors(){
   motorPos oneStep;
   oneStep.L = motorL.currentPosition()+1;
   oneStep.R = motorR.currentPosition()+1;
@@ -91,6 +91,8 @@ void startMotors(){
   oneStep.R = motorR.currentPosition()-1;
   setMotorTargetPosition(oneStep);
   util_WaitForMotors();
+  //update global time so motors wait full time before disengaging
+  timeSinceLastCommand = millis();
 }
 
 

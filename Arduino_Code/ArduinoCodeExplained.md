@@ -4,8 +4,9 @@ This is the code that runs on the arduino. It is intended for an Arduino Mega an
 
 # Libraries to Install
 There a few libraries that need to be installed.
-"Adafruit_SSD1306" by Adafruit for the OLED (only if the OLED macro is defined)
+"Adafruit_SSD1306" by Adafruit for the OLED (only if the OLED macro is defined, has dependency of Adafruit_GFX that will install by default)
 "Adafruit Motor Shield library" by Adafruit (included with AFMotor.h)
+"AccelStepper" by Mike McCauley
 "Servo" by Marchol Margolis, Arduino (may be installed by default)
 
 
