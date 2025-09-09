@@ -17,14 +17,13 @@ bool modeUpdated = false;
 
 char mode = 0;
 
-const String modeNames[NUM_MODES] = {"HOME", "SET\nHOME", "ENGAGE\nMTRS", "TEST\nGCODE", "Paper\nAirplane", "Hands", "Heart", "Flow\nField", "GVSU", "TECH\nSHOW", "PEN\nUP", "PEN\nDOWN"};
+const String modeNames[NUM_MODES] = {"SET\nHOME", "Move\nHOME", "TEST\nGCODE", "Paper\nAirplane", "Hands", "Heart", "Flow\nField", "GVSU", "TECH\nSHOW", "PEN\nUP", "PEN\nDOWN", "ENGAGE\nMTRS"};
 
 typedef void (*VoidFuncPtr)();
 
 VoidFuncPtr modeFuncs[] = {
-  moveHome,
   setStepperHome,
-  engageMotors,
+  moveHome,
   testGcode,
   paperAirplaneGcode,
   handsGcode,
@@ -34,6 +33,7 @@ VoidFuncPtr modeFuncs[] = {
   techShowLogo,
   penlift_penUp,
   penlift_penDown,
+  engageMotors,
 };
 
 void SetupButtonIO(){

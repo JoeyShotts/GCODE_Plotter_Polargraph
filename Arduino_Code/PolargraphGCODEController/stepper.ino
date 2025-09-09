@@ -30,8 +30,12 @@ float currentMotorspeed = 0;
 void stepperSetup(){
   setMotorSpeed(currentSpeed);
   motorHomePos = calcMotorPos(0, 0);
-  setStepperHome();
-  moveHome();
+
+  //set steppers to be in home position, but don't move them home
+  motorL.setCurrentPosition(motorHomePos.L);
+  motorR.setCurrentPosition(motorHomePos.R);
+  currentXpos = 0;
+  currentYpos = 0;
 }
 
 bool NotAtTargetPos(){
@@ -72,6 +76,7 @@ void setStepperHome(){
   motorR.setCurrentPosition(motorHomePos.R);
   currentXpos = 0;
   currentYpos = 0;
+  engageMotors();
 }
 
 void stopMotors(){

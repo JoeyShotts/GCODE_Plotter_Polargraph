@@ -37,7 +37,7 @@ extern bool relativeCoords = false;
 
 // For disabling motors after set time * * * * * * * * * * 
 unsigned long timeSinceLastCommand = 0;
-unsigned long timeBeforeDisengage = 40000; //time it waits from most recent command to release the motor
+unsigned long timeBeforeDisengage = 50000; //time it waits from most recent command to release the motor
 
 // Movement Global Variables * * * * * * * * * *
 extern AccelStepper motorL;
@@ -48,7 +48,7 @@ double currentXpos = 0;
 double currentYpos = 0;
 
 //speed is 0-100 (mm/sec) representing 0-1000 steps per second (with 200 steps/rotation, and 20 teeth per step, each tooth moves 1mm)
-float currentSpeed = 20;
+float currentSpeed = DEFAULT_SPEED;
 
 // Comms * * * * * * * * * * 
 const int INLENGTH = 80;

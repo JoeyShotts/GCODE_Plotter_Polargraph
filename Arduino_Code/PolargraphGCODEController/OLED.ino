@@ -8,7 +8,6 @@ Displays what function will run. Does not have to be included if project is to b
 #include <Adafruit_SSD1306.h>
 
 //defaults to mega pins 21 and 22
-
 Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 
 void SETUP_OLED(){
@@ -24,7 +23,7 @@ void SETUP_OLED(){
   display.setTextSize(3);             
   display.setTextColor(SSD1306_WHITE);       
   display.setCursor(0,5);             // Start at top-left corner
-  display.println(F("HOME"));
+  display.println(F("SET\nHOME"));
   display.display();
   delay(300);
 

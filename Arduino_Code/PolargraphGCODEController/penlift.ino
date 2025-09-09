@@ -8,7 +8,7 @@
 #define  UP_POSITION 55
 #define  DOWN_POSITION 145
 
-#define  PEN_LIFT_SPEED 4 // ms between steps of moving servo
+#define  PEN_LIFT_SPEED 3 // ms between steps of moving servo
 
 #define SERVO_PIN 10
 

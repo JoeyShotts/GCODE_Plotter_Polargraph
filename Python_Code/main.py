@@ -88,13 +88,15 @@ class GCODE_Controller_GUI(tk.CTk):
 
         # Queue of strings used to update the user feedback label.
         self.userFeedbackQueue = Queue()
+        self.__userFeedbackLabelMaxCharsLine = 80
+        self.percentageQueue = Queue()
 
         #set up communications
         self.ArduinoComms = USBComm(self.userFeedbackQueue)
         self.portStrList, self.portList = self.ArduinoComms.getPortsDesciptions()
 
         #Set up Gcode Control
-        self.gcodeControl = GcodeControler(self.ArduinoComms)
+        self.gcodeControl = GcodeControler(self.ArduinoComms, self.percentageQueue)
 
         #Create a grid where menu items will be place
         self.grid = Grid(self, 5, 5)
@@ -124,19 +126,7 @@ class GCODE_Controller_GUI(tk.CTk):
                 self.enableMenu()
                 self.gcodeThreadRan = False
 
-        curCmd = None
-        first = True #Used to grab the most recent item from the queue, 
-        # don't want the last item in the queue
-        # Update the user feedback with the current command
-        while not self.userFeedbackQueue.empty():
-            if first:
-                curCmd = self.userFeedbackQueue.get()
-            else:
-                self.userFeedbackQueue.get()
-
-        # Only update if a command was actually added
-        if not (curCmd is None):
-            self.userFeedbackLabel.configure(text=curCmd)
+        self.updateTextLabels()
 
         # calls mainloop function again after ms
         self.after(self.mainLoopUpdate, self.mainLoop)
@@ -148,13 +138,15 @@ class GCODE_Controller_GUI(tk.CTk):
         """
         #Row0 -> Select Comms, user feedback
         #Column 0
-        #Button to get the ports
-        self.getPortsBtn = tk.CTkButton(self, text="Get Ports", command=self.getPortsBtnCallback,)                    
-        self.getPortsBtn.grid(row=0, column=0, rowspan=1, columnspan=1, padx=self.padx, sticky="ew")
-        #Column 1
         #Combobox to select port options
         self.comSelect = tk.CTkComboBox(self, values=self.portStrList, command=self.comSelectCallback,)
-        self.comSelect.grid(row=0, column=1, rowspan=1, columnspan=1, padx=self.padx, sticky="ew")
+        self.comSelect.grid(row=0, column=0, rowspan=1, columnspan=1, padx=self.padx, sticky="ew")
+        
+        #Column 1
+        # Percentage Feedback Label
+        self.percentageLabel = tk.CTkLabel(self, text="", fg_color="transparent", font=('Arial',12))
+        self.percentageLabel.grid(row=0, column=1, rowspan=1, columnspan=1, padx=self.padx, sticky="ew")
+        
         #Column 2
         startTxt = "Welcome to the Arduino GCODE Controller.\nFor a list of commands see manual."
         self.userFeedbackLabel = tk.CTkLabel(self, text=startTxt, fg_color="transparent", font=('Arial',12))
@@ -229,6 +221,38 @@ class GCODE_Controller_GUI(tk.CTk):
         self.speedSlider = tk.CTkSlider(self, from_=1, to=50, number_of_steps=49, command=self.speedSliderCallback)
         self.speedSlider.set(self.defaultSpeed)
         self.speedSlider.grid(row=5, column=3, rowspan=1, columnspan=2, padx=self.padx, sticky="ew")
+
+    def updateTextLabels(self):
+        curCmd = None
+        first = True #Used to grab the most recent item from the queue, 
+        # don't want the last item in the queue
+        # Update the user feedback with the current command
+        while not self.userFeedbackQueue.empty():
+            if first:
+                curCmd = self.userFeedbackQueue.get()
+            else:
+                self.userFeedbackQueue.get()
+
+        # Only update if a command was actually added
+        if not (curCmd is None):
+            # Split one line into multiple if needed
+            if len(curCmd) > self.__userFeedbackLabelMaxCharsLine:
+                curCmd = curCmd[:self.__userFeedbackLabelMaxCharsLine] + "...\n"
+                curCmd[self.__userFeedbackLabelMaxCharsLine:]
+            self.userFeedbackLabel.configure(text=curCmd)
+
+        #Update percentage label
+        curCmd = None
+        first = True
+        while not self.percentageQueue.empty():
+            if first:
+                curCmd = self.percentageQueue.get()
+            else:
+                self.percentageQueue.get()
+
+        # Only update if a command was actually added
+        if not (curCmd is None):
+            self.percentageLabel.configure(text=curCmd)
 
     # REGION Gcode Commands Files
     def playStopGcodeCall(self):
@@ -351,15 +375,6 @@ class GCODE_Controller_GUI(tk.CTk):
         command = self.getCmdEntry.get()
         if not self.stopCommands:
             self.ArduinoComms.sendSingleCommand(command)
-            
-    # REGION Comms Controls
-    def getPortsBtnCallback(self):
-        """
-        Callback for getPortsBtn. Updates the port options in the comSelect Dropdown.
-        """
-        if not self.stopCommands:
-            self.portStrList, self.portList = self.ArduinoComms.getPortsDesciptions()
-            self.comSelect.configure(values=self.portStrList)
 
     def comSelectCallback(self, choice):
         """
@@ -367,6 +382,10 @@ class GCODE_Controller_GUI(tk.CTk):
         """
         if self.stopCommands:
             return
+        
+        self.portStrList, self.portList = self.ArduinoComms.getPortsDesciptions()
+        self.comSelect.configure(values=self.portStrList)
+        
         #Get actual port name
         index=-1
         try:
@@ -499,7 +518,6 @@ class GCODE_Controller_GUI(tk.CTk):
         """
         Disables constorls that should not be used when GCODE is running.
         """
-        self.getPortsBtn.configure(state="disabled")
         self.comSelect.configure(state="disabled")
         self.runCmd.configure(state="disabled")
         self.setHomeBtn.configure(state="disabled")
@@ -518,7 +536,6 @@ class GCODE_Controller_GUI(tk.CTk):
         """
         Enables controls that were disabled while GCODE was running.
         """
-        self.getPortsBtn.configure(state="normal")
         self.comSelect.configure(state="normal")
         self.runCmd.configure(state="normal")
         self.setHomeBtn.configure(state="normal")

@@ -17,7 +17,6 @@ Controls the position of the plotter.
 #define HOME_OFFSET_X (double)47.3
 #define HOME_OFFSET_Y (double)47.3
 
-
 //mm, max machine location from home
 #define MAX_POS_X (double)600
 #define MAX_POS_Y (double)800 //negative distance from home ex. 800 checks if Y>-800

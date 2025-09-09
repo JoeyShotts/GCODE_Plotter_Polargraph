@@ -67,8 +67,27 @@ class plotPoints:
         # Get the current axes object
         ax = plt.gca()
 
-        # Autoscale the x-axis (this is often the default behavior, but good to be explicit)
+        # Autoscale the x-axis 
         ax.autoscale(enable=True, axis='x')
+
+        # Get the x-axis limits
+        x_min, x_max = ax.get_xlim()
+        x_dis = x_max-x_min
+
+        # Get the y-axis limits
+        y_min, y_max = ax.get_ylim()
+        y_dis = y_max-y_min
+        
+        # Set x and y distance to be same, choosing whichever axis is bigger
+        if(x_dis>y_dis):
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(y_min, (y_min+x_dis))
+        else:
+            ax.set_xlim(x_min, (x_min+y_dis))
+            ax.set_ylim(y_min, y_max)
+
+        #Set axes to always be an equal ratio
+        ax.set_aspect('equal')
 
         plt.show()
 

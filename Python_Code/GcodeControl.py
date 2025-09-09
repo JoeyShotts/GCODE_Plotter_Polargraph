@@ -32,10 +32,11 @@ class GcodeControler:
     generateArduinoCommands() -> Generates code for polargraph device that would run the GCODE directly.
 
     """
-    def __init__(self, arduinoComms):
+    def __init__(self, arduinoComms, queue):
         # Set externally, the file the original GCODE commands are read from
         self.__gcodeFile = None
         self.__ArduinoComms = arduinoComms
+        self.__percentageQueue = queue
         
         # USed to calculate amount of time for movement, set externally
         self.__speed = 20
@@ -74,9 +75,9 @@ class GcodeControler:
             self.__gcodeFile = file
             return True, "Valid File."
         
-    def setSpeed(self, __speed):
-        if 0 < __speed < 100: 
-            self.__speed = __speed
+    def setSpeed(self, speed):
+        if 0 < speed < 100: 
+            self.__speed = speed
     
     def getSpeed(self):
         return self.__speed
@@ -143,7 +144,13 @@ class GcodeControler:
         self.__ArduinoComms.sendSingleCommand('C10,END')
 
         unexpectedExit = False
+        numCommands = len(commands)
+        curCommand = 0
         for command in commands:
+            curCommand += 1
+            percentageComplete = round((curCommand/numCommands)*100)
+            self.__percentageQueue.put(str(percentageComplete)+"%")
+
             # If program is paused, wait for resume or stop
             while(self.__gcodePaused):
                 if self.__stopGcode:
@@ -151,6 +158,7 @@ class GcodeControler:
                 time.sleep(0.01)
 
             if self.__stopGcode:
+                self.__percentageQueue.put("")
                 self.__stopGcode = False
                 unexpectedExit = True
                 self.__gcodePaused = False
@@ -165,7 +173,11 @@ class GcodeControler:
             if not self.__ArduinoComms.sendSingleCommand(command):
                 #Enable user input
                 self.__ArduinoComms.sendSingleCommand('C13')
+                self.__percentageQueue.put("")
                 return False, "FAILED, Comms Problem"
+
+        self.__percentageQueue.put("")
+            
 
         if not unexpectedExit:
             if not self.__ArduinoComms.waitForComplete():
