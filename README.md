@@ -20,11 +20,15 @@ Here is a diagram of the plotter itself. The application could be used for a dif
 # Video Demo
 [Link](https://youtu.be/lAycF0MGN9o)
 
+# Article
+I wrote this article about the project.
+[Link](https://hackaday.io/page/399635-another-polar-plotter-project)
+
 # Aplication Features
 Here is what the application looks like:
 ![Application Image](ApplicationImage.png)
 
-The application has a number of features. It allows you to select the comm port of the usb device. It has a button "Get Ports" if a new device is added while the application is open. 
+The application has a number of features. It allows you to select the comm port of the usb device. It has a dropdown where you can select the USB Comm Port (Usually with Arduino in the name) you want to connect to.
 
 The application allows you to simulate and run GCODE commands. Simply add the file location to the .ngc or .txt file containing the gcode file. Then you can select the simulate file. If a USB device is connected, you can run the gcode file as well, along with pausing the file while it's running.
 
@@ -58,7 +62,7 @@ The application also allows you to set the speed. The slider only goes from 1-50
 
 
 # User Input
-In this project there are 3 buttons and a feedback OLED screen. These can be disabled if they don't want to be used. See the Electronics.md file. The function select changes the function that is shown on the OLED and that the run button will run. The run button runs the currently selected function. The functions include things like Home, Set Home, Pen Up/Down, and custom GCODE files loaded onto the arduino. This way the plotter can work on it's own without USB connection to a PC.
+In this project there are 3 buttons and a feedback OLED screen. These can be disabled if they don't want to be used. See the Electronics.md file. The function select changes the function that is shown on the OLED and that the run button will run. The run button runs the currently selected function. The functions include things like Set Home (tells the robot it's at (0, 0) and engages the motors), Move Home, Pen Up/Down, and custom GCODE files loaded onto the arduino. This way the plotter can work on it's own without USB connection to a PC.
 
 ![User Buttons](UserButtons.png)
 

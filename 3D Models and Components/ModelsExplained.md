@@ -12,10 +12,10 @@ You may also want some screws. (You could probably get away wihtout them, especi
 I also use a few different sizes of zip ties, but those can easily be picked up at a local store.
 
 # Motor Brackets
-These are designed to hold nema17 stepper motors. They are designed for Motors with a relativley short shaft(less than 2.5cm) and a gear pulley with an outer diameter less than 1.75cm. They have a curved shape which helps to act as idlers and keep the belt from slipping. The left bracket has a cross that allows you to line up the gondola so the machine has a home position. See Usage intrctions for more info on how to home the machine.
+These are designed to hold nema17 stepper motors. They are designed for Motors with a relativley short shaft(less than 2.5cm) and a gear pulley with an outer diameter less than 1.75cm. They have a curved shape which helps to act as idlers and keep the belt from slipping. The left bracket has a cross that allows you to line up the gondola so the machine has a home position. See Usage intrctions for more info on how to home the machine. There is also GondolaAlignmentClipV2 that clips onto the motorclip and allows the peg on the gonola to have something to but up against.
 
 ![Motor Bracket](MotorBracketL.png)
-
+![GondolaAlignmentClipV2](GondolaAlignmentClip.png)
 
 # Motor Clips
 There are holes on the MotorBrackets designed for M3 screws and a simple clip. This allows the motor brackets to rest on some kind of lip. This makes it easier to mount the Brackets on different surfaces.
